@@ -1,5 +1,5 @@
 class Program < ActiveRecord::Base
-  STATUSES = [:import, :ok, :old]
+  STATUSES = [:import, :ok, :ng]
   acts_as_taggable
 
   def self.import
