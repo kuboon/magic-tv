@@ -1,0 +1,10 @@
+= simple_form_for @program, :html => { :class => 'form-horizontal' } do |f|
+  = f.input :uid
+  = f.input :url
+  = f.input :name
+  = f.input :description
+  = f.input :start_at
+  = f.input :end_at
+  .form-actions
+    = f.button :submit, :class => 'btn-primary'
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), programs_path, :class => 'btn'

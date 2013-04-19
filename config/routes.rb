@@ -1,4 +1,12 @@
 MagicTv::Application.routes.draw do
+  root :to => 'programs#index'
+
+  resources :programs
+
+
+  resources :users
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

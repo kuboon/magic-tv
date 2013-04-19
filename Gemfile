@@ -44,6 +44,7 @@ gem "kaminari"
 gem "action_args"
 gem "strong_parameters"
 gem "factory_girl_rails"
+
 group :assets do
   gem "twitter-bootstrap-rails"
   gem "jquery-ui-rails"
