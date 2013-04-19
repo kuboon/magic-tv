@@ -1,0 +1,41 @@
+ja:
+  activerecord:
+    models:
+      auth: 認証  #g
+      program: 番組
+      user: ユーザー  #g
+
+    attributes:
+      acts_as_taggable_on/tag:
+        name: タグ
+        taggings: Taggings  #g
+
+      acts_as_taggable_on/tagging:
+        context: コンテキスト  #g
+        tag: :activerecord.models.tag  #g
+        taggable: :activerecord.models.taggable  #g
+        taggable_type: タグを付ける型  #g
+        tagger: :activerecord.models.tagger  #g
+        tagger_type: タガー タイプ  #g
+
+      auth:
+        provider: プロバイダー  #g
+        uid: Uid  #g
+        user: :activerecord.models.user  #g
+
+      program:
+        base_tags: 基本タグ  #g
+        description: 説明  #g
+        end_at: 終了時刻
+        name: 番組名
+        start_at: 開始時刻
+        status: ステータス  #g
+        tag_taggings: タグ taggings  #g
+        taggings: Taggings  #g
+        tags: タグ  #g
+        uid: Uid  #g
+        url: Url  #g
+
+      user:
+        email: 電子メール  #g
+        name: 名前  #g

@@ -52,7 +52,7 @@ group :assets do
 end
 
 group :development do
-  gem "i18n_generators"
+  gem "i18n_generators", git: 'git://github.com/amatsuda/i18n_generators.git'
   gem "better_errors"
   gem "binding_of_caller"
   gem "meta_request"
