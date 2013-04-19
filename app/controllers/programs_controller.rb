@@ -1,11 +1,12 @@
 # coding: utf-8
 
 class ProgramsController < ApplicationController
-  permits :uid, :url, :name, :description, :start_at, :end_at, :status
+  permits :url, :name, :description, :tag_list, :start_at, :end_at, :status
 
   # GET /programs
   def index
     @programs = Program.where(status: :ok).where("start_at > ?", Time.now).order("start_at ASC")
+    params[:tag].try{|tag| @programs = @programs.tagged_with(tag)}
   end
 
   # GET /programs/1

@@ -12,5 +12,11 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.ui.autocomplete
+//= require jquery.ui.widget
 //= require twitter/bootstrap
 //= require_tree .
+
+$('input.date_time_picker').parent().datetimepicker({language: 'ja-JP', format:"yyyy/MM/dd hh:mm", pickSeconds: false});
+$('input.tag_it').tagit();
+
