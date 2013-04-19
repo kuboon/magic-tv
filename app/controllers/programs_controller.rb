@@ -1,11 +1,11 @@
 # coding: utf-8
 
 class ProgramsController < ApplicationController
-  permits :uid, :url, :name, :description, :start_at, :end_at
+  permits :uid, :url, :name, :description, :start_at, :end_at, :status
 
   # GET /programs
   def index
-    @programs = Program.all
+    @programs = Program.where(status: :ok).where("start_at > ?", Time.now).order("start_at ASC")
   end
 
   # GET /programs/1
@@ -39,9 +39,15 @@ class ProgramsController < ApplicationController
     @program = Program.find(id)
 
     if @program.update_attributes(program)
-      redirect_to @program, notice: 'Program was successfully updated.'
+      respond_to do |format|
+        format.html { redirect_to @program, notice: 'Program was successfully updated.' }
+        format.js { head :ok }
+      end
     else
-      render action: 'edit'
+      respond_to do |format|
+        format.html { render action: 'edit' }
+        format.js { render json: { errors: @program.errors.messages } }
+      end
     end
   end
 
@@ -50,6 +56,9 @@ class ProgramsController < ApplicationController
     @program = Program.find(id)
     @program.destroy
 
-    redirect_to programs_url
+    respond_to do |format|
+      format.html { redirect_to programs_url }
+      format.js { head :ok }
+    end
   end
 end

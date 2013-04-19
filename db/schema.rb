@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130419120255) do
+ActiveRecord::Schema.define(:version => 20130419134242) do
 
   create_table "auths", :force => true do |t|
     t.integer  "user_id"
@@ -24,17 +24,39 @@ ActiveRecord::Schema.define(:version => 20130419120255) do
   add_index "auths", ["user_id"], :name => "index_auths_on_user_id"
 
   create_table "programs", :force => true do |t|
+    t.integer  "user_id"
     t.string   "uid"
     t.string   "url"
     t.string   "name"
-    t.string   "description"
-    t.string   "start_at"
-    t.string   "end_at"
+    t.text     "description"
+    t.datetime "start_at"
+    t.datetime "end_at"
+    t.string   "status"
+    t.integer  "parent_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
 
+  add_index "programs", ["parent_id"], :name => "index_programs_on_parent_id"
   add_index "programs", ["uid"], :name => "index_programs_on_uid", :unique => true
+  add_index "programs", ["user_id"], :name => "index_programs_on_user_id"
+
+  create_table "taggings", :force => true do |t|
+    t.integer  "tag_id"
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.integer  "tagger_id"
+    t.string   "tagger_type"
+    t.string   "context",       :limit => 128
+    t.datetime "created_at"
+  end
+
+  add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
+  add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
+
+  create_table "tags", :force => true do |t|
+    t.string "name"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"

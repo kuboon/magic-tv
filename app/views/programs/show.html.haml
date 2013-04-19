@@ -2,30 +2,24 @@
 .page-header
   %h1=t '.title', :default => model_class.model_name.human
 
-%p
-  %strong= model_class.human_attribute_name(:uid) + ':'
-  %br
-  = @program.uid
-%p
-  %strong= model_class.human_attribute_name(:url) + ':'
-  %br
-  = @program.url
-%p
-  %strong= model_class.human_attribute_name(:name) + ':'
-  %br
-  = @program.name
-%p
-  %strong= model_class.human_attribute_name(:description) + ':'
-  %br
-  = @program.description
-%p
-  %strong= model_class.human_attribute_name(:start_at) + ':'
-  %br
-  = @program.start_at
-%p
-  %strong= model_class.human_attribute_name(:end_at) + ':'
-  %br
-  = @program.end_at
+%dl
+  %dt= model_class.human_attribute_name(:url) + ':'
+  %dd=  @program.url
+
+  %dt= model_class.human_attribute_name(:name) + ':'
+  %dd=  @program.name
+
+  %dt= model_class.human_attribute_name(:description) + ':'
+  %dd=  @program.description
+
+  %dt= model_class.human_attribute_name(:start_at) + ':'
+  %dd=  @program.start_at
+
+  %dt= model_class.human_attribute_name(:end_at) + ':'
+  %dd=  @program.end_at
+
+  %dt= model_class.human_attribute_name(:status) + ':'
+  %dd=  @program.status
 
 .form-actions
   = link_to t('.back', :default => t("helpers.links.back")), programs_path, :class => 'btn'

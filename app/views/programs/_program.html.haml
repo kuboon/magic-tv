@@ -1,0 +1,8 @@
+%tr
+  %td
+    = link_to glyph(:pencil), edit_program_path(program)
+    = link_to glyph(:ok), program_path(program, program:{status: :ok}), method: :put, remote: :true
+    = link_to glyph(:trash), program_path(program), method: :delete, remote: :true
+  %th= link_to program.name, program.url
+  %td=l program.start_at
+  %td= program.description

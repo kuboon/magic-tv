@@ -44,6 +44,7 @@ gem "kaminari"
 gem "action_args"
 gem "strong_parameters"
 gem "factory_girl_rails"
+gem "feed-normalizer"
 
 group :assets do
   gem "twitter-bootstrap-rails"
