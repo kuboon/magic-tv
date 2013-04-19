@@ -29,6 +29,8 @@ GEM
     activesupport (3.2.13)
       i18n (= 0.6.1)
       multi_json (~> 1.0)
+    acts-as-taggable-on (2.4.0)
+      rails (~> 3.0)
     arel (3.0.2)
     better_errors (0.8.0)
       coderay (>= 1.0.0)
@@ -45,6 +47,11 @@ GEM
       execjs
     coffee-script-source (1.6.2)
     debug_inspector (0.0.2)
+    delayed_job (3.0.5)
+      activesupport (~> 3.0)
+    delayed_job_active_record (0.4.4)
+      activerecord (>= 2.1.0, < 4)
+      delayed_job (~> 3.0)
     diff-lcs (1.2.3)
     domain_name (0.5.11)
       unf (>= 0.0.5, < 1.0.0)
@@ -58,6 +65,8 @@ GEM
     factory_girl_rails (4.2.1)
       factory_girl (~> 4.2.0)
       railties (>= 3.0.0)
+    faraday (0.8.7)
+      multipart-post (~> 1.1)
     haml (4.0.2)
       tilt
     haml-rails (0.4)
@@ -65,7 +74,9 @@ GEM
       activesupport (>= 3.1, < 4.1)
       haml (>= 3.1, < 4.1)
       railties (>= 3.1, < 4.1)
+    hashie (2.0.3)
     hike (1.2.2)
+    httpauth (0.2.0)
     i18n (0.6.1)
     i18n_generators (1.2.1)
       mechanize
@@ -78,6 +89,8 @@ GEM
       jquery-rails
       railties (>= 3.1.0)
     json (1.7.7)
+    jwt (0.1.8)
+      multi_json (>= 1.5)
     kaminari (0.14.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -99,10 +112,35 @@ GEM
     method_source (0.8.1)
     mime-types (1.22)
     multi_json (1.7.2)
+    multipart-post (1.2.0)
     net-http-digest_auth (1.3)
     net-http-persistent (2.8)
     nokogiri (1.5.9)
     ntlm-http (0.1.1)
+    oauth (0.4.7)
+    oauth2 (0.8.1)
+      faraday (~> 0.8)
+      httpauth (~> 0.1)
+      jwt (~> 0.1.4)
+      multi_json (~> 1.0)
+      rack (~> 1.2)
+    omniauth (1.1.4)
+      hashie (>= 1.2, < 3)
+      rack
+    omniauth-facebook (1.4.1)
+      omniauth-oauth2 (~> 1.1.0)
+    omniauth-oauth (1.0.1)
+      oauth
+      omniauth (~> 1.0)
+    omniauth-oauth2 (1.1.1)
+      oauth2 (~> 0.8.0)
+      omniauth (~> 1.0)
+    omniauth-openid (1.0.1)
+      omniauth (~> 1.0)
+      rack-openid (~> 1.3.1)
+    omniauth-twitter (0.0.16)
+      multi_json (~> 1.3)
+      omniauth-oauth (~> 1.0)
     polyglot (0.3.3)
     pry (0.9.12)
       coderay (~> 1.0.5)
@@ -115,6 +153,9 @@ GEM
       rack (>= 0.4)
     rack-contrib (1.1.0)
       rack (>= 0.9.1)
+    rack-openid (1.3.1)
+      rack (>= 1.1.0)
+      ruby-openid (>= 2.1.8)
     rack-ssl (1.3.3)
       rack
     rack-test (0.6.2)
@@ -148,6 +189,7 @@ GEM
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
       rspec-mocks (~> 2.13.0)
+    ruby-openid (2.2.3)
     sass (3.2.7)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -195,9 +237,11 @@ PLATFORMS
 
 DEPENDENCIES
   action_args
+  acts-as-taggable-on
   better_errors
   binding_of_caller
   coffee-rails (~> 3.2.1)
+  delayed_job_active_record
   exception_notification
   factory_girl_rails
   haml-rails
@@ -206,6 +250,9 @@ DEPENDENCIES
   jquery-ui-rails
   kaminari
   meta_request
+  omniauth-facebook
+  omniauth-openid
+  omniauth-twitter
   pry-rails
   rails (= 3.2.13)
   rspec-rails
