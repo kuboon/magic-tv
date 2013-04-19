@@ -6,6 +6,13 @@ GIT
       mechanize
       rails (>= 3.0.0)
 
+GIT
+  remote: git://github.com/ryanb/cancan.git
+  revision: e6bf4c8d12dca316eb4f0923ca30b6d3dfedb7ae
+  branch: 2.0
+  specs:
+    cancan (2.0.0.alpha)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -255,6 +262,7 @@ DEPENDENCIES
   acts-as-taggable-on
   better_errors
   binding_of_caller
+  cancan!
   coffee-rails (~> 3.2.1)
   delayed_job_active_record
   exception_notification

@@ -1,14 +1,16 @@
 MagicTv::Application.routes.draw do
 
-  match "session/destroy"
+  resources :programs do
+    member do
+      put "moderate/:status", action: :moderate, as: :moderate
+    end
+  end
 
   resource :import, only: [:new, :create]
 
-
-  resources :programs
-  root :to => 'programs#index'
-
-
   resources :users
-  get "/auth/:provider/callback" => "users#create"
+  match "/auth/:provider/callback" => "users#create"
+  match "session/destroy"
+
+  root :to => 'programs#index'
 end

@@ -29,8 +29,8 @@
           .container.nav-collapse
             %ul.nav
               %li= link_to "番組一覧", programs_path
-              %li= link_to "番組投稿", new_program_path
-              %li= link_to "インポート", new_import_path
+              %li= link_to "番組投稿", new_program_path if can? :create, :programs
+              %li= link_to "インポート", new_import_path if can? :access, :import
             %ul.nav.pull-right
               - if logged_in?
                 %li.dropdown
@@ -50,7 +50,7 @@
                     %li= link_to 'Twitter', "/auth/twitter"
                     %li= link_to 'Facebook', "/auth/facebook"
                     %li= link_to 'mixi', "/auth/mixi"
-                    %li= link_to 'OpenID', "/auth/openid"
+                    %li= link_to 'OpenID', "/auth/open_id"
 
     .container-fluid
 

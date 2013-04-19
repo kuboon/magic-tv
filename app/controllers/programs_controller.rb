@@ -1,35 +1,33 @@
 # coding: utf-8
 
 class ProgramsController < ApplicationController
-  permits :url, :name, :description, :tag_list, :start_at, :end_at, :status
+  load_and_authorize_resource
+  permits :url, :name, :description, :tag_list, :start_at, :end_at
 
   # GET /programs
   def index
-    @programs = Program.where(status: :ok).where("start_at > ?", Time.now).order("start_at ASC")
+    @programs = @programs.where(status: :ok).where("start_at > ?", Time.now).order("start_at ASC")
     params[:tag].try{|tag| @programs = @programs.tagged_with(tag)}
   end
 
   # GET /programs/1
   def show(id)
-    @program = Program.find(id)
   end
 
   # GET /programs/new
   def new
-    @program = Program.new
   end
 
   # GET /programs/1/edit
   def edit(id)
-    @program = Program.find(id)
   end
 
   # POST /programs
   def create(program)
-    @program = Program.new(program)
+    @program.status = can?(:moderate, :programs) ? :ok : :draft
 
     if @program.save
-      redirect_to @program, notice: 'Program was successfully created.'
+      redirect_to @program, notice: '番組情報が投稿されました。モデレータに承認されると他のユーザーにも表示されます。'
     else
       render action: 'new'
     end
@@ -50,6 +48,11 @@ class ProgramsController < ApplicationController
         format.js { render json: { errors: @program.errors.messages } }
       end
     end
+  end
+
+  def moderate(id, status)
+    @program.update_attributes(user_id: current_user.id, status: status)
+    head :ok
   end
 
   # DELETE /programs/1

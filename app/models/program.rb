@@ -1,5 +1,5 @@
 class Program < ActiveRecord::Base
-  STATUSES = [:import, :ok, :ng]
+  STATUSES = [:draft, :ok, :ng]
   acts_as_taggable
 
   def self.import
@@ -9,16 +9,16 @@ class Program < ActiveRecord::Base
       posts = FeedNormalizer::FeedNormalizer.parse open uri
       posts.entries.each do |post|
         uid = post.url
-        next if Program.find_by_uid(uid)
-        e = Program.new(
-          uid: uid,
-          name: post.title.force_encoding('utf-8'),
-          start_at: post.date_published,
-          description: post.content.force_encoding('utf-8'),
-          url: post.url,
-          status: :import
-        )
-        e.tag_list = keyword
+        e = Program.find_or_initialize_by_uid(uid) do |e|
+          e.update_attributes(
+            name: post.title.force_encoding('utf-8'),
+            start_at: post.date_published,
+            description: post.content.force_encoding('utf-8'),
+            url: post.url,
+            status: :draft
+          )
+        end
+        e.tag_list << keyword
         e.save!
       end
     end

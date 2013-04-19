@@ -39,3 +39,4 @@ ja:
       user:
         email: 電子メール  #g
         name: 名前  #g
+        role: 権限

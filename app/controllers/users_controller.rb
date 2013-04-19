@@ -1,26 +1,19 @@
 # coding: utf-8
 
 class UsersController < ApplicationController
+  load_and_authorize_resource
   permits :name, :email
 
   # GET /users
   def index
-    @users = User.all
   end
 
   # GET /users/1
   def show(id)
-    @user = User.find(id)
-  end
-
-  # GET /users/new
-  def new
-    @user = User.new
   end
 
   # GET /users/1/edit
   def edit(id)
-    @user = User.find(id)
   end
 
   # POST /users
@@ -39,8 +32,6 @@ class UsersController < ApplicationController
 
   # PUT /users/1
   def update(id, user)
-    @user = User.find(id)
-
     if @user.update_attributes(user)
       redirect_to @user, notice: 'User was successfully updated.'
     else
@@ -50,7 +41,6 @@ class UsersController < ApplicationController
 
   # DELETE /users/1
   def destroy(id)
-    @user = User.find(id)
     @user.destroy
 
     redirect_to users_url

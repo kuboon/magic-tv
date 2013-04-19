@@ -8,3 +8,4 @@
 
 input,textarea, .tagit { width:400px; }
 input.date_time_picker { width: 179px; }
+i[class^="icon-"], i[class*=" icon-"] { line-height: inherit; }

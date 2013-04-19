@@ -39,6 +39,7 @@ gem 'jquery-rails'
 
 gem "exception_notification"
 gem 'sorcery'
+gem "cancan", :git => "git://github.com/ryanb/cancan.git", :branch => "2.0"
 gem "haml-rails"
 gem "simple_form"
 gem "kaminari"
