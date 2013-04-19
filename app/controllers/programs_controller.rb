@@ -7,7 +7,8 @@ class ProgramsController < ApplicationController
   # GET /programs
   def index
     @programs = @programs.where(status: :ok).where("start_at > ?", Time.now).order("start_at ASC")
-    params[:tag].try{|tag| @programs = @programs.tagged_with(tag)}
+    @current_tags = params[:tag].to_s.split(',')
+    @programs = @programs.tagged_with(@current_tags) if @current_tags.present?
   end
 
   # GET /programs/1

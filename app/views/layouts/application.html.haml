@@ -29,7 +29,7 @@
           .container.nav-collapse
             %ul.nav
               %li= link_to "番組一覧", programs_path
-              %li= link_to "番組投稿", new_program_path if can? :create, :programs
+              %li= link_to "番組情報の投稿", can?(:create,:programs) ? new_program_path : "javascript:alert('ログインが必要です')"
               %li= link_to "インポート", new_import_path if can? :access, :import
             %ul.nav.pull-right
               - if logged_in?
