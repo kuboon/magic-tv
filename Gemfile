@@ -38,6 +38,7 @@ gem 'jquery-rails'
 # gem 'debugger'
 
 gem "exception_notification"
+gem 'sorcery'
 gem "haml-rails"
 gem "simple_form"
 gem "kaminari"

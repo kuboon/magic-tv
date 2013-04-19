@@ -1,5 +1,7 @@
 MagicTv::Application.routes.draw do
 
+  match "session/destroy"
+
   resource :import, only: [:new, :create]
 
 
@@ -8,5 +10,5 @@ MagicTv::Application.routes.draw do
 
 
   resources :users
-
+  get "/auth/:provider/callback" => "users#create"
 end

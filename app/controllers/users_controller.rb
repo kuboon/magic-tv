@@ -24,14 +24,17 @@ class UsersController < ApplicationController
   end
 
   # POST /users
-  def create(user)
-    @user = User.new(user)
-
-    if @user.save
-      redirect_to @user, notice: 'User was successfully created.'
-    else
-      render action: 'new'
+  def create
+    omni_hash = request.env['omniauth.auth'] or return redirect_to root_path, error: "認証に失敗しました"
+    auth = Auth.find_or_create_by_provider_and_uid(omni_hash['provider'], omni_hash['uid'])
+    auth.omni_hash = omni_hash
+    unless auth.user
+      auth.user = User.new(name: omni_hash.info['nickname'])
     end
+    auth.save!
+
+    auto_login(auth.user)
+    redirect_to root_url, notice: "ログインしました"
   end
 
   # PUT /users/1

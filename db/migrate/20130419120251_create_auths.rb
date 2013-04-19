@@ -4,6 +4,7 @@ class CreateAuths < ActiveRecord::Migration
       t.belongs_to :user
       t.string :provider
       t.string :uid
+      t.text :omni_hash
 
       t.timestamps
     end

@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(:version => 20130419134242) do
     t.integer  "user_id"
     t.string   "provider"
     t.string   "uid"
+    t.text     "omni_hash"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
