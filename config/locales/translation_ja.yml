@@ -25,9 +25,10 @@ ja:
 
       program:
         base_tags: 基本タグ  #g
-        description: 説明  #g
+        description: 詳細
         end_at: 終了時刻
         name: 番組名
+        channel: チャンネル
         start_at: 開始時刻
         status: ステータス  #g
         tag_taggings: タグ taggings  #g

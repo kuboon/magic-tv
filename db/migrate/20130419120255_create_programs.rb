@@ -5,6 +5,7 @@ class CreatePrograms < ActiveRecord::Migration
       t.string :uid
       t.string :url
       t.string :name
+      t.string :channel
       t.text :description
       t.datetime :start_at
       t.datetime :end_at

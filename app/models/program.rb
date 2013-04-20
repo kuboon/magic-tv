@@ -15,7 +15,7 @@ class Program < ActiveRecord::Base
             name: post.title.force_encoding('utf-8'),
             start_at: post.date_published,
             end_at: nil,
-            description: parsed[3],
+            channel: parsed[3],
             url: post.url,
             status: :draft
           )

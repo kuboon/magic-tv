@@ -3,8 +3,9 @@
   #{day} の番組
   \
   - programs.each do |program|
-    \  #{program.start_at.strftime("%H:%M")} #{program.name} [#{program.tag_list}]
-    \        #{program.description}
+    \  #{program.start_at.strftime("%H:%M")} #{program.channel}
+    \        #{program.name} [#{program.tag_list}]
+    ="        #{program.description}" if program.description
     \        #{program.url}
     \
   \

@@ -2,7 +2,7 @@
 
 class ProgramsController < ApplicationController
   load_and_authorize_resource
-  permits :url, :name, :description, :tag_list, :start_at, :end_at
+  permits :url, :name, :description, :channel, :tag_list, :start_at, :end_at
 
   # GET /programs
   def index
