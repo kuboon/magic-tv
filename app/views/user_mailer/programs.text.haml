@@ -5,7 +5,8 @@
   - programs.each do |program|
     \  #{program.start_at.strftime("%H:%M")} #{program.channel}
     \        #{program.name} [#{program.tag_list}]
-    ="        #{program.description}" if program.description
+    - if program.description
+      \        #{program.description}
     \        #{program.url}
     \
   \
