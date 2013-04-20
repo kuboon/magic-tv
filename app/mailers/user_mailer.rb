@@ -6,9 +6,8 @@ class UserMailer < ActionMailer::Base
   #
   #   en.user_mailer.programs.subject
   #
-  def programs
-    @greeting = "Hi"
-
-    mail to: "to@example.org"
+  def programs(user)
+    @programs = Program.where(status: :ok).where("? < start_at and start_at < ?", Time.now, 2.weeks.since).order("start_at ASC").group_by{|p| p.start_at.to_date}
+    mail to: user.email
   end
 end

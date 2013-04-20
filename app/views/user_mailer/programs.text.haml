@@ -1,3 +1,10 @@
-UserMailer#programs
 
-= @greeting + ", find me in app/views/user_mailer/programs.text.haml"
+- @programs.each do |day, programs|
+  #{day} の番組
+  \
+  - programs.each do |program|
+    \  #{program.start_at.strftime("%H:%M")} #{program.name} [#{program.tag_list}]
+    \        #{program.description}
+    \        #{program.url}
+    \
+  \

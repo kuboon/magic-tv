@@ -10,10 +10,12 @@ class Program < ActiveRecord::Base
       posts.entries.each do |post|
         uid = post.url
         e = Program.find_or_initialize_by_uid(uid) do |e|
+          parsed = post.content.force_encoding('utf-8').match(/.+ (.+)～(.+) \[(.+)\]/)
           e.update_attributes(
             name: post.title.force_encoding('utf-8'),
             start_at: post.date_published,
-            description: post.content.force_encoding('utf-8'),
+            end_at: nil,
+            description: parsed[3],
             url: post.url,
             status: :draft
           )

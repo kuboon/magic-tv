@@ -11,6 +11,10 @@ class ProgramsController < ApplicationController
     @programs = @programs.tagged_with(@current_tags) if @current_tags.present?
   end
 
+  def mail
+    render text: UserMailer.programs(current_user).body
+  end
+
   # GET /programs/1
   def show(id)
   end
