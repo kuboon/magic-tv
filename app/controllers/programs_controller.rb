@@ -6,7 +6,7 @@ class ProgramsController < ApplicationController
 
   # GET /programs
   def index
-    @programs = @programs.where(status: :ok).where("start_at > ?", Time.now).order("start_at ASC")
+    @programs = @programs.includes(:base_tags).where(status: :ok).where("start_at > ?", Time.now).order("start_at ASC")
     @current_tags = params[:tag].to_s.split(',')
     @programs = @programs.tagged_with(@current_tags) if @current_tags.present?
   end

@@ -9,6 +9,6 @@
   %td=l program.start_at, format: :short
   %td
     = link_to program.name, program.url
-    = tags_tag program.tag_list
+    = tags_tag program.base_tags.map(&:name) # tag_list is slow
   %td= program.channel
   %td= program.description
