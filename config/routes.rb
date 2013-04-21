@@ -9,8 +9,10 @@ MagicTv::Application.routes.draw do
 
   resource :import, only: [:new, :create]
 
-  resources :users
   match "/auth/:provider/callback" => "users#create"
+  resources :users do
+    get :help, on: :collection
+  end
   match "session/destroy"
 
   root :to => 'programs#index'
