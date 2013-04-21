@@ -10,10 +10,14 @@ class Ability
       case user.role
       when "admin"
         can :access, :all
+      when "moderator"
+        can :access, :imports
+        can :access, :programs
+        can :access, :users
       else
         can :create, :programs
         can :edit, :programs, user_id: user.id
-        can :access, :users, id: user.id
+        can :access, :users
       end
     end
   end

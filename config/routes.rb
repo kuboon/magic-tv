@@ -9,11 +9,12 @@ MagicTv::Application.routes.draw do
 
   resource :import, only: [:new, :create]
 
-  resources :users do
-    get :help, on: :collection
-    get :unsubscribe
+  resource :user do
+    get :help
+    get "unsubscribe/:key", action: :unsubscribe
   end
   match "/auth/:provider/callback" => "users#omniauth"
+
   match "session/destroy"
 
   root :to => 'programs#index'

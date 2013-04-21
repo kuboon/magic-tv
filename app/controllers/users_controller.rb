@@ -1,23 +1,22 @@
 # coding: utf-8
 
 class UsersController < ApplicationController
-  load_and_authorize_resource except: [:omniauth, :unsubscribe]
   permits :name, :email
 
-  # GET /users
+  before_filter do
+    @user = current_user || User.new(params[:user])
+  end
+
   def new
-    return redirect_to edit_user_url(current_user) if logged_in?
+    return redirect_to edit_user_url if logged_in?
   end
 
-  # GET /users/1
-  def show(id)
+  def show
   end
 
-  # GET /users/1/edit
-  def edit(id)
+  def edit
   end
 
-  # POST /users
   def create
     @user.key = SecureRandom.hex(16)
     if @user.save
@@ -41,24 +40,22 @@ class UsersController < ApplicationController
     redirect_to root_url, notice: "ログインしました"
   end
 
-  # PUT /users/1
-  def update(id, user)
+  def update(user)
     if @user.update_attributes(user)
-      redirect_to @user, notice: 'User was successfully updated.'
+      redirect_to user_url , notice: 'User was successfully updated.'
     else
       render action: 'edit'
     end
   end
 
-  # DELETE /users/1
-  def destroy(id)
+  def destroy
     @user.destroy
 
-    redirect_to users_url
+    redirect_to root_url, notice: "User was successfully deleted."
   end
 
-  def unsubscribe(user_id)
-    user = User.find_by_key!(user_id)
+  def unsubscribe(key)
+    user = User.find_by_key!(key)
     if user.auths.count > 0
       user.update_column(:email, nil)
     else

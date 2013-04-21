@@ -8,17 +8,6 @@ describe UsersController do
     { "name" => "MyString" }
   end
 
-  describe 'GET index' do
-    before do
-      @user = User.create! valid_attributes
-      controller.index
-    end
-    describe 'assigns all users as @users' do
-      subject { controller.instance_variable_get('@users') }
-      it { should eq([@user]) }
-    end
-  end
-
   describe 'GET show' do
     before do
       @user = User.create! valid_attributes
