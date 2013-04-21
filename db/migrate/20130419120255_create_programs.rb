@@ -4,10 +4,10 @@ class CreatePrograms < ActiveRecord::Migration
       t.integer :user_id
       t.string :uid
       t.string :url
-      t.string :name
+      t.string :name, null: false
       t.string :channel
       t.text :description
-      t.datetime :start_at
+      t.datetime :start_at, null: false
       t.datetime :end_at
       t.string :status
       t.integer :parent_id
@@ -16,5 +16,6 @@ class CreatePrograms < ActiveRecord::Migration
     add_index :programs, :user_id
     add_index :programs, :uid, :unique => true
     add_index :programs, :parent_id
+    add_index :programs, :start_at
   end
 end

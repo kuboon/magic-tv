@@ -15,23 +15,24 @@ ActiveRecord::Schema.define(:version => 20130419134242) do
 
   create_table "auths", :force => true do |t|
     t.integer  "user_id"
-    t.string   "provider"
-    t.string   "uid"
+    t.string   "provider",   :null => false
+    t.string   "uid",        :null => false
     t.text     "omni_hash"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
+  add_index "auths", ["provider", "uid"], :name => "index_auths_on_provider_and_uid", :unique => true
   add_index "auths", ["user_id"], :name => "index_auths_on_user_id"
 
   create_table "programs", :force => true do |t|
     t.integer  "user_id"
     t.string   "uid"
     t.string   "url"
-    t.string   "name"
+    t.string   "name",        :null => false
     t.string   "channel"
     t.text     "description"
-    t.datetime "start_at"
+    t.datetime "start_at",    :null => false
     t.datetime "end_at"
     t.string   "status"
     t.integer  "parent_id"
@@ -40,6 +41,7 @@ ActiveRecord::Schema.define(:version => 20130419134242) do
   end
 
   add_index "programs", ["parent_id"], :name => "index_programs_on_parent_id"
+  add_index "programs", ["start_at"], :name => "index_programs_on_start_at"
   add_index "programs", ["uid"], :name => "index_programs_on_uid", :unique => true
   add_index "programs", ["user_id"], :name => "index_programs_on_user_id"
 
@@ -64,10 +66,12 @@ ActiveRecord::Schema.define(:version => 20130419134242) do
     t.string   "name"
     t.string   "email"
     t.string   "role"
+    t.string   "key",        :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  add_index "users", ["name"], :name => "index_users_on_name", :unique => true
+  add_index "users", ["email"], :name => "index_users_on_email"
+  add_index "users", ["key"], :name => "index_users_on_key", :unique => true
 
 end

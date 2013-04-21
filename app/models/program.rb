@@ -2,6 +2,8 @@ class Program < ActiveRecord::Base
   STATUSES = [:draft, :ok, :ng]
   acts_as_taggable
 
+  validates_presence_of :name, :start_at
+
   def self.import
     keywords = %w(イリュージョン ナポレオンズ マジシャン マジック マリック 奇術 マギー審司 山上兄弟 手品 前田知洋 超能力 魔術 マギー司郎 ふじいあきら トリックTV)
     keywords.each do |keyword|

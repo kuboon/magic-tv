@@ -3,7 +3,8 @@ class Ability
 
   def initialize(user)
     can :read, :programs
-    can :create, :users
+    can :access, :users
+    cannot [:read, :update, :destory], :users
     can :access, :session
     if user
       case user.role
