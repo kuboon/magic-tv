@@ -48,9 +48,9 @@ gem "acts-as-taggable-on"
 gem "omniauth-twitter"
 gem "omniauth-facebook"
 gem "omniauth-openid"
+gem "twitter-bootstrap-rails"
 
 group :assets do
-  gem "twitter-bootstrap-rails"
   gem "jquery-ui-rails"
 end
 
