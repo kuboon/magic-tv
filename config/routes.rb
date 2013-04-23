@@ -11,7 +11,7 @@ MagicTv::Application.routes.draw do
 
   resource :user do
     get :help
-    get "unsubscribe/:key", action: :unsubscribe
+    get "unsubscribe/:key", action: :unsubscribe, as: :unsubscribe
   end
   match "/auth/:provider/callback" => "users#omniauth"
 

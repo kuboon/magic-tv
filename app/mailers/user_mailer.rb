@@ -9,7 +9,7 @@ class UserMailer < ActionMailer::Base
   #
   def programs(user)
     @programs = Program.includes(:base_tags).where(status: :ok).where("? < start_at and start_at < ?", Time.now, 2.weeks.since).order("start_at ASC").group_by{|p| p.start_at.to_date}
-    @unsubscribe_url = user_unsubscribe_url(user.key)
+    @unsubscribe_url = unsubscribe_user_url(user.key)
     mail to: user.email, subject: "[Magic TV] #{Date.today} から2週間のマジック番組"
   end
 end
