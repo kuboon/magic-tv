@@ -13,6 +13,7 @@ group :assets do
   # gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
+  gem 'turbo-sprockets-rails3'
 end
 
 gem 'jquery-rails'
@@ -48,11 +49,10 @@ gem "acts-as-taggable-on"
 gem "omniauth-twitter"
 gem "omniauth-facebook"
 gem "omniauth-openid"
-gem "twitter-bootstrap-rails"
 
-group :assets do
-  gem "jquery-ui-rails"
-end
+gem "twitter-bootstrap-rails"
+gem "jquery-ui-rails"
+
 
 group :development do
   gem "i18n_generators", git: 'git://github.com/amatsuda/i18n_generators.git'
