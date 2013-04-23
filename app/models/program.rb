@@ -5,9 +5,16 @@ class Program < ActiveRecord::Base
   validates_presence_of :name, :start_at
 
   def self.import
-    keywords = %w(イリュージョン ナポレオンズ マジシャン マジック マリック 奇術 マギー審司 山上兄弟 手品 前田知洋 超能力 魔術 マギー司郎 ふじいあきら トリックTV)
-    keywords.each do |keyword|
-      uri = "http://tv.so-net.ne.jp/rss/schedulesBySearch.action?stationPlatformId=0&condition.keyword=#{URI::encode(keyword)}"
+    keywords = {}
+    %w(イリュージョン ナポレオンズ マジシャン マリック 奇術 マギー審司 山上兄弟 手品 前田知洋 超能力 魔術 マギー司郎 ふじいあきら トリックTV).each do |word|
+      keywords[word] = word
+    end
+    keywords.merge!(
+      "超能力" => "超能力 -エスパー魔美 -涼宮ハルヒ",
+      "マジック" => "マジック -マジックミラー号"
+    )
+    keywords.each do |keyword, query|
+      uri = "http://tv.so-net.ne.jp/rss/schedulesBySearch.action?stationPlatformId=0&condition.keyword=#{URI::encode(query)}"
       posts = FeedNormalizer::FeedNormalizer.parse open uri
       posts.entries.each do |post|
         uid = post.url
