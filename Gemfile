@@ -52,7 +52,6 @@ group :development do
   gem "better_errors"
   gem "binding_of_caller"
   gem "meta_request"
-  gem "spring"
 end
 
 group :development, :test do
@@ -60,6 +59,7 @@ group :development, :test do
   gem "webrat"
   gem "pry-rails"
   gem 'sqlite3'
+  gem "spring"
 end
 
 gem "delayed_job_active_record"
