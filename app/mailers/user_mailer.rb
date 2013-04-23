@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 class UserMailer < ActionMailer::Base
-  default from: "tv@magician.jp"
+  default from: "noreply@magic-tv.trick-with.net"
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
