@@ -42,6 +42,12 @@ gem "strong_parameters"
 gem "factory_girl_rails"
 gem "feed-normalizer"
 
+gem "delayed_job_active_record"
+gem "acts-as-taggable-on"
+gem "omniauth-twitter"
+gem "omniauth-facebook"
+gem "omniauth-openid"
+
 group :assets do
   gem "twitter-bootstrap-rails"
   gem "jquery-ui-rails"
@@ -62,8 +68,6 @@ group :development, :test do
   gem "spring"
 end
 
-gem "delayed_job_active_record"
-gem "acts-as-taggable-on"
-gem "omniauth-twitter"
-gem "omniauth-facebook"
-gem "omniauth-openid"
+group :production do
+  gem 'pg'
+end
