@@ -1,6 +1,6 @@
 
 - @programs.each do |day, programs|
-  #{day} の番組
+  #{l day, format: "%m月%d日(%a)"} の番組
   \
   - programs.each do |program|
     \  #{program.start_at.strftime("%H:%M")} #{program.channel}
