@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     auth = Auth.find_or_create_by_provider_and_uid(omni_hash['provider'], omni_hash['uid'])
     auth.omni_hash = omni_hash
     unless auth.user
-      auth.user = User.new(name: omni_hash.info['nickname'], key: SecureRandom.hex(16))
+      auth.user = User.new(name: omni_hash.info['nickname'])
       auth.user.save!(validate: false)
     end
     auth.save!
@@ -52,6 +52,21 @@ class UsersController < ApplicationController
     @user.destroy
 
     redirect_to root_url, notice: "User was successfully deleted."
+  end
+
+  def resend_activation
+    if @user.email.present?
+      UserMailer.activate(@user).deliver
+      redirect_to root_url, notice: "確認メールを送信しました"
+    else
+      redirect_to root_url, notice: "メールアドレスが登録されていません"
+    end
+  end
+
+  def activate(key)
+    user = User.find_by_key!(key)
+    user.update_column(:email_active, true)
+    redirect_to root_url, notice: "メールアドレスを確認しました"
   end
 
   def unsubscribe(key)
