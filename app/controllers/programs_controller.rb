@@ -12,7 +12,7 @@ class ProgramsController < ApplicationController
   end
 
   def mail
-    render text: UserMailer.programs(current_user).body
+    render text: UserMailer.programs(current_user).body.parts[0].body.raw_source
   end
 
   # GET /programs/1

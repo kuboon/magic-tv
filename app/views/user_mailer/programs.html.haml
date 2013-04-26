@@ -1,0 +1,14 @@
+
+- @programs.each do |day, programs|
+  %h1 #{l day, format: "%m月%d日(%a)"} の番組
+  %ul
+    - programs.each do |program|
+      %li
+        #{program.start_at.strftime("%H:%M")} #{program.channel}
+        %br
+        #{link_to_if program.url.present?, program.name, program.url} [#{program.tag_list}]
+        - if program.description
+          = program.description
+
+\----
+= link_to "登録解除", @unsubscribe_url
