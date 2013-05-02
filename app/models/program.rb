@@ -5,32 +5,29 @@ class Program < ActiveRecord::Base
   validates_presence_of :name, :start_at
 
   def self.import
-    keywords = {}
-    %w(イリュージョン ナポレオンズ マジシャン マリック 奇術 マギー審司 山上兄弟 手品 前田知洋 超能力 魔術 マギー司郎 ふじいあきら トリックTV).each do |word|
-      keywords[word] = word
-    end
-    keywords.merge!(
-      "超能力" => "超能力 -エスパー魔美 -涼宮ハルヒ",
-      "マジック" => "マジック -マジックミラー号"
-    )
+    draft_count = Program.where(status: :draft).count
+    keywords = YAML.load_file(Rails.root.join("db/keywords.yml"))
     keywords.each do |keyword, query|
+      query ||= keyword
       uri = "http://tv.so-net.ne.jp/rss/schedulesBySearch.action?stationPlatformId=0&condition.keyword=#{URI::encode(query)}"
       posts = FeedNormalizer::FeedNormalizer.parse open uri
       posts.entries.each do |post|
         uid = post.url
         e = Program.find_or_initialize_by_uid(uid) do |e|
           parsed = post.content.force_encoding('utf-8').match(/.+ (.+)～(.+) \[(.+)\]/)
-          e.update_attributes(
+          e.assign_attributes(
             name: post.title.force_encoding('utf-8'),
             start_at: post.date_published,
-            end_at: nil,
+            end_at: nil, #todo
             channel: parsed[3],
             url: post.url,
             status: :draft
           )
+          draft_count += 1
         end
         e.tag_list << keyword
         e.save!
+        return if draft_count > 200
       end
     end
   end
