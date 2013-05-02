@@ -1,6 +1,6 @@
 = simple_form_for @user, url: user_path, :html => { :class => 'form-horizontal' } do |f|
   = f.input :name
-  = f.input :email, hint: "登録すると週に2回メールが届くようになります"
+  = f.input :email, hint: "登録すると週に2回メールが届くようになります。 #{link_to glyph(:question_sign), help_user_path}"
   .form-actions
     = f.button :submit, :class => 'btn-primary'
     = link_to t('.cancel', :default => t("helpers.links.cancel")), :back, :class => 'btn'
