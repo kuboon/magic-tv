@@ -2,11 +2,13 @@
 
 FactoryGirl.define do
   factory :program do
-    uid "MyString"
-    url "MyString"
-    name "MyString"
-    description "MyString"
-    start_at "MyString"
-    end_at "MyString"
+    sequence(:uid){nil}
+    url "http://example.com"
+    name "TestProgram"
+    channel "test channel"
+    description "TestDescription"
+    start_at { rand(100).hours.since }
+    end_at nil
+    status :public
   end
 end

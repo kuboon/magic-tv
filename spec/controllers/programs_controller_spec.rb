@@ -1,38 +1,34 @@
 require 'spec_helper'
 
 describe ProgramsController do
-  # This should return the minimal set of attributes required to create a valid
-  # Program. As you add validations to Program, be sure to
-  # update the return value of this method accordingly.
-  def valid_attributes
-    { "uid" => "MyString" }
+  before do
+    @user = create(:user)
   end
-
   describe 'GET index' do
+    subject { get :index }
     before do
-      @program = Program.create! valid_attributes
-      controller.index
+      @program = create(:program, status: :ok, start_at: 1.day.since)
     end
     describe 'assigns all programs as @programs' do
-      subject { controller.instance_variable_get('@programs') }
-      it { should eq([@program]) }
+      it { subject; assigns(:programs).should eq ([@program]) }
     end
   end
 
   describe 'GET show' do
+    subject(:action) { get :show, id: @program.to_param }
     before do
-      @program = Program.create! valid_attributes
-      controller.show(@program.to_param)
+      @program = create(:program)
     end
     describe 'assigns the requested program as @program' do
-      subject { controller.instance_variable_get('@program') }
+      subject { action; assigns(:program) }
       it { should eq(@program) }
     end
   end
 
   describe 'GET new' do
     before do
-      controller.new
+      controller.stub(current_user: @user)
+      get :new
     end
     describe 'assigns a new program as @program' do
       subject { controller.instance_variable_get('@program') }
@@ -42,8 +38,9 @@ describe ProgramsController do
 
   describe 'GET edit' do
     before do
-      @program = Program.create! valid_attributes
-      controller.edit(@program.to_param)
+      @program = create(:program, user: @user)
+      controller.stub(current_user: @program.user)
+      get :edit, id: @program.to_param
     end
     describe 'assigns the requested program as @program' do
       subject { controller.instance_variable_get('@program') }
@@ -52,62 +49,55 @@ describe ProgramsController do
   end
 
   describe 'POST create' do
+    subject(:action) { post :create, program: attributes }
+    before do
+      controller.stub(current_user: @user)
+    end
     context 'with valid params' do
-      before do
-        controller.should_receive(:redirect_to) {|u| u.should eq(Program.last) }
-      end
+      let(:attributes){ attributes_for(:program) }
       describe 'creates a new Program' do
         it { expect {
-          controller.create(valid_attributes)
+          subject
         }.to change(Program, :count).by(1) }
       end
 
       describe 'assigns a newly created program as @program and redirects to the created program' do
-        before do
-          controller.create(valid_attributes)
-        end
-        subject { controller.instance_variable_get('@program') }
+        subject { action; assigns(:program) }
         it { should be_a(Program) }
         it { should be_persisted }
       end
     end
 
     context 'with invalid params' do
+      let(:attributes){ { "name" => "" } }
       describe "assigns a newly created but unsaved program as @program, and re-renders the 'new' template" do
-        before do
-          Program.any_instance.stub(:save) { false }
-          controller.should_receive(:render).with(:action => 'new')
-          controller.create({ "uid" => "invalid value" })
-        end
-        subject { controller.instance_variable_get('@program') }
+        subject { action; assigns(:program) }
         it { should be_a_new(Program) }
       end
     end
   end
 
   describe 'PUT update' do
+    before {
+      controller.stub(current_user: @user)
+      @program = create(:program, user: @user)
+    }
+    subject(:action) { put :update, id: @program.to_param, program: attributes }
     context 'with valid params' do
+      let(:attributes){ attributes_for(:program) }
       describe 'updates the requested program, assigns the requested program as @program, and redirects to the program' do
-        before do
-          @program = Program.create! valid_attributes
-          controller.should_receive(:redirect_to).with(@program, anything)
-          controller.update(@program.to_param, valid_attributes)
-        end
-        subject { controller.instance_variable_get('@program') }
+        subject { action; assigns(:program) }
         it { should eq(@program) }
       end
     end
 
     context 'with invalid params' do
+      let(:attributes){{ start_at: nil }}
       describe "assigns the program as @program, and re-renders the 'edit' template" do
         before do
-          @program = Program.create! valid_attributes
-          # Trigger the behavior that occurs when invalid params are submitted
           Program.any_instance.stub(:save) { false }
-          controller.should_receive(:render).with(:action => 'edit')
-          controller.update(@program.to_param, { "uid" => "invalid value" })
         end
-        subject { controller.instance_variable_get('@program') }
+        subject { action; controller.instance_variable_get('@program') }
         it { should eq(@program) }
       end
     end
@@ -115,13 +105,12 @@ describe ProgramsController do
 
   describe 'DELETE destroy' do
     before do
-      @program = Program.create! valid_attributes
-      controller.stub(:programs_url) { '/programs' }
-      controller.should_receive(:redirect_to).with('/programs')
+      controller.stub(current_user: @user)
+      @program = create(:program, user: @user)
     end
     it 'destroys the requested program, and redirects to the programs list' do
       expect {
-        controller.destroy(@program.to_param)
+        delete :destroy, id: @program.to_param
       }.to change(Program, :count).by(-1)
     end
   end

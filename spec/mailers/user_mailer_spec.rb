@@ -2,16 +2,17 @@ require "spec_helper"
 
 describe UserMailer do
   describe "programs" do
-    let(:mail) { UserMailer.programs }
+    let(:user) { create(:user) }
+    let(:mail) { UserMailer.programs(user) }
 
     it "renders the headers" do
-      mail.subject.should eq("Programs")
-      mail.to.should eq(["to@example.org"])
-      mail.from.should eq(["from@example.com"])
+      mail.subject.should include "[Magic TV]"
+      mail.to.should eq([user.email])
+      mail.from.should eq(["noreply@magic-tv.trick-with.net"])
     end
 
     it "renders the body" do
-      mail.body.encoded.should match("Hi")
+      mail.body.encoded.should match("unsubscribe")
     end
   end
 

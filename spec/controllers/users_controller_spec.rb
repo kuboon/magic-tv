@@ -5,13 +5,14 @@ describe UsersController do
   # User. As you add validations to User, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    { "name" => "MyString" }
+    { "email" => "test@example.com" }
   end
 
   describe 'GET show' do
     before do
-      @user = User.create! valid_attributes
-      controller.show(@user.to_param)
+      @user = create :user
+      controller.stub(current_user: @user)
+      get :show
     end
     describe 'assigns the requested user as @user' do
       subject { controller.instance_variable_get('@user') }
@@ -21,7 +22,7 @@ describe UsersController do
 
   describe 'GET new' do
     before do
-      controller.new
+      get :new
     end
     describe 'assigns a new user as @user' do
       subject { controller.instance_variable_get('@user') }
@@ -31,8 +32,9 @@ describe UsersController do
 
   describe 'GET edit' do
     before do
-      @user = User.create! valid_attributes
-      controller.edit(@user.to_param)
+      @user = create :user
+      controller.stub(current_user: @user)
+      get :edit
     end
     describe 'assigns the requested user as @user' do
       subject { controller.instance_variable_get('@user') }
@@ -42,18 +44,15 @@ describe UsersController do
 
   describe 'POST create' do
     context 'with valid params' do
-      before do
-        controller.should_receive(:redirect_to) {|u| u.should eq(User.last) }
-      end
       describe 'creates a new User' do
         it { expect {
-          controller.create(valid_attributes)
+          post :create, user: valid_attributes
         }.to change(User, :count).by(1) }
       end
 
       describe 'assigns a newly created user as @user and redirects to the created user' do
         before do
-          controller.create(valid_attributes)
+          post :create, user: valid_attributes
         end
         subject { controller.instance_variable_get('@user') }
         it { should be_a(User) }
@@ -65,11 +64,12 @@ describe UsersController do
       describe "assigns a newly created but unsaved user as @user, and re-renders the 'new' template" do
         before do
           User.any_instance.stub(:save) { false }
-          controller.should_receive(:render).with(:action => 'new')
-          controller.create({ "name" => "invalid value" })
+          controller.stub(current_user: @user)
+          post :create, user:{ "name" => "invalid value" }
         end
         subject { controller.instance_variable_get('@user') }
         it { should be_a_new(User) }
+        it { response.should render_template('new') }
       end
     end
   end
@@ -78,9 +78,9 @@ describe UsersController do
     context 'with valid params' do
       describe 'updates the requested user, assigns the requested user as @user, and redirects to the user' do
         before do
-          @user = User.create! valid_attributes
-          controller.should_receive(:redirect_to).with(@user, anything)
-          controller.update(@user.to_param, valid_attributes)
+          @user = create :user
+          controller.stub(current_user: @user)
+          put :update, valid_attributes
         end
         subject { controller.instance_variable_get('@user') }
         it { should eq(@user) }
@@ -90,27 +90,26 @@ describe UsersController do
     context 'with invalid params' do
       describe "assigns the user as @user, and re-renders the 'edit' template" do
         before do
-          @user = User.create! valid_attributes
+          @user = create :user
           # Trigger the behavior that occurs when invalid params are submitted
           User.any_instance.stub(:save) { false }
-          controller.should_receive(:render).with(:action => 'edit')
-          controller.update(@user.to_param, { "name" => "invalid value" })
+          controller.stub(current_user: @user)
+          put :update, user:{ "name" => "invalid value" }
         end
-        subject { controller.instance_variable_get('@user') }
-        it { should eq(@user) }
+        it { controller.instance_variable_get('@user').should eq(@user) }
+        it { response.should render_template('edit') }
       end
     end
   end
 
   describe 'DELETE destroy' do
     before do
-      @user = User.create! valid_attributes
-      controller.stub(:users_url) { '/users' }
-      controller.should_receive(:redirect_to).with('/users')
+      @user = create :user
+      controller.stub(current_user: @user)
     end
     it 'destroys the requested user, and redirects to the users list' do
       expect {
-        controller.destroy(@user.to_param)
+        delete :destroy
       }.to change(User, :count).by(-1)
     end
   end
