@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user.key = SecureRandom.hex(16)
+    User.where(email: params.require(:user)[:email], email_active: false, role: nil).delete_all
     if @user.save
       redirect_to root_url, notice: "登録しました"
     else
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     auth = Auth.find_or_create_by_provider_and_uid(omni_hash['provider'], omni_hash['uid'])
     auth.omni_hash = omni_hash
     unless auth.user
-      auth.user = User.new(name: omni_hash.info['nickname'])
+      auth.user = User.new(name: omni_hash.info['nickname'], role: :contributor)
       auth.user.save!(validate: false)
     end
     auth.save!

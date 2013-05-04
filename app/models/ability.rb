@@ -16,7 +16,7 @@ class Ability
         can :access, :users
       else
         can :create, :programs
-        can :edit, :programs, user_id: user.id
+        can [:update, :destroy], :programs, user_id: user.id
         can :access, :users
       end
     end

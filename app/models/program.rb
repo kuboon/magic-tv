@@ -1,6 +1,7 @@
 class Program < ActiveRecord::Base
   STATUSES = [:draft, :ok, :ng]
   acts_as_taggable
+  belongs_to :user
 
   validates_presence_of :name, :start_at
 
