@@ -52,7 +52,7 @@ gem "omniauth-openid"
 
 gem "twitter-bootstrap-rails"
 gem "jquery-ui-rails"
-
+gem 'newrelic_rpm'
 
 group :development do
   gem "i18n_generators", git: 'git://github.com/amatsuda/i18n_generators.git'
