@@ -12,7 +12,7 @@ describe UserMailer do
     end
 
     it "renders the body" do
-      mail.body.should match("unsubscribe")
+      mail.body.parts[0].body.should match("unsubscribe")
     end
   end
 

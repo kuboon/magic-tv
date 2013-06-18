@@ -6,6 +6,6 @@ describe "imports/new.html.haml" do
   end
   it "renders program" do
     render
-    assert_select @programs[0].name
+    assert_select "a", @programs[0].name
   end
 end
