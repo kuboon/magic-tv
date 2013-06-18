@@ -8,11 +8,11 @@ describe UserMailer do
     it "renders the headers" do
       mail.subject.should include "[Magic TV]"
       mail.to.should eq([user.email])
-      mail.from.should eq(["noreply@magic-tv.trick-with.net"])
+      mail.from.should eq(["info@tv.magician.jp"])
     end
 
     it "renders the body" do
-      mail.body.encoded.should match("unsubscribe")
+      mail.body.should match("unsubscribe")
     end
   end
 

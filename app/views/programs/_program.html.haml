@@ -8,7 +8,7 @@
       = link_to glyph(:trash), program_path(program), method: :delete, remote: :true
   %td=l program.start_at, format: "%m/%d(%a) %H:%M"
   %td
-    = link_to program.name, program.url
+    = link_to program.name, program.url, target: "_blank"
     = tags_tag program.base_tags.map(&:name) # tag_list is slow
   %td= program.channel
   %td= program.description
